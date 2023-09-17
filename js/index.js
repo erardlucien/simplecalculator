@@ -55,7 +55,7 @@ function retrieveValues() {
     let value2 = parseInt(document.querySelector("#field2").value);
 
     if( value1 >= MAXVALUE || value2 >= MAXVALUE) {
-        result.textContent = 'value1 and value2 should be less than 1,000,000!';
+        result.textContent = 'value1 and value2 should be lesser than 1,000,000!';
         return;
     }
 
