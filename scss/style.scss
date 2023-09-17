@@ -41,6 +41,7 @@ html {
 // calculator
 
 .calculator {
+    position: relative;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -51,6 +52,13 @@ html {
     min-width: 60vmin;
     border-radius: 1.2rem 1.5rem;
     border: 0.1rem solid rgb(143, 143, 143);
+
+    h1 {
+        position: absolute;
+        top: 0;
+        padding: 1.2rem 3.1rem;
+        color: rgb(143, 143, 143);
+    }
 }
 
 // operations
