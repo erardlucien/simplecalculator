@@ -100,5 +100,6 @@ function retrieveValues() {
 }
 
 function showResult (res) {
+    res = res.toFixed(5);
     result.textContent = res;
 }
