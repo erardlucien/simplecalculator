@@ -18,24 +18,44 @@ const MAXVALUE = 1_000_000;
 document.addEventListener("DOMContentLoaded", () => {
     add.addEventListener("click", () => {
         let values = retrieveValues();
+
+        if(values === null || values === undefined) {
+            return;
+        }
+
         let res = values[0] + values[1];
         showResult(res);
     });
     
     mul.addEventListener("click", () => {
         let values = retrieveValues();
+
+        if(values === null || values === undefined) {
+            return;
+        }
+
         let res = values[0] * values[1];
         showResult(res);
     });
     
     sub.addEventListener("click", () => {
         let values = retrieveValues();
+
+        if(values === null || values === undefined) {
+            return;
+        }
+
         let res = values[0] - values[1];
         showResult(res);
     });
     
     divi.addEventListener("click", () => {
         let values = retrieveValues();
+
+        if(values === null || values === undefined) {
+            return;
+        }
+
         if(values[1] == 0) {
             values[1] = 1;
         }
@@ -50,9 +70,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+function containsOnlyNumbers(str) {
+    return /^(\d+\.{0,1}\d{0,5})$/.test(str);
+}
+
 function retrieveValues() {
-    let value1 = parseInt(document.querySelector("#field1").value);
-    let value2 = parseInt(document.querySelector("#field2").value);
+    const field1Value = document.querySelector("#field1").value;
+    const field2Value = document.querySelector("#field2").value;
+
+    if(!containsOnlyNumbers(field1Value) || !containsOnlyNumbers(field2Value)) {
+        result.innerHTML = 'value1 and value2 should be a number!<br> Only five digits are allowed after the point!';
+        return;
+    }
+
+    let value1 = parseFloat(field1Value);
+    let value2 = parseFloat(field2Value);
 
     if( value1 >= MAXVALUE || value2 >= MAXVALUE) {
         result.textContent = 'value1 and value2 should be lesser than 1,000,000!';
