@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function containsOnlyNumbers(str) {
-    return /^(\d+\.{0,1}\d{0,5})$/.test(str);
+    return /^(\-{0,1}\d+\.{0,1}\d{0,5})$/.test(str);
 }
 
 function retrieveValues() {
