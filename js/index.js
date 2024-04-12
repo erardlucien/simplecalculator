@@ -13,9 +13,11 @@ const result = document.querySelector("#result");
 /**@type HTMLElement */
 const reset = document.querySelector("#reset");
 
-const MAXVALUE = 1_000_000;
+const MAX_VALUE = Number.MAX_VALUE;
+const MIN_VALUE = Number.MIN_VALUE;
 
 document.addEventListener("DOMContentLoaded", () => {
+
     add.addEventListener("click", () => {
         let values = retrieveValues();
 
@@ -86,13 +88,13 @@ function retrieveValues() {
     let value1 = parseFloat(field1Value);
     let value2 = parseFloat(field2Value);
 
-    if( value1 >= MAXVALUE || value2 >= MAXVALUE) {
-        result.textContent = 'value1 and value2 should be lesser than 1,000,000!';
+    if( value1 >= MAX_VALUE || value2 >= MAX_VALUE ) {
+        result.textContent = `value1 and value2 should be lesser than ${MAX_VALUE}!`;
         return;
     }
 
-    if( value1 <= -MAXVALUE || value2 <= -MAXVALUE) {
-        result.textContent = 'value1 and value2 should be greater than -1,000,000!';
+    if( value1 <= MIN_VALUE || value2 <= MIN_VALUE ) {
+        result.textContent = `value1 and value2 should be greater than ${MIN_VALUE}!`;
         return;
     }
 
@@ -100,5 +102,11 @@ function retrieveValues() {
 }
 
 function showResult (res) {
-    result.textContent = res;
+
+    if( res <= MIN_VALUE || res >= MAX_VALUE ) {
+        result.textContent = `Out of range!`;
+        return;
+    }
+
+    result.textContent = res.toFixed(7);
 }

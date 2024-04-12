@@ -1,2 +1,3 @@
 # simplecalculator
-https://erardlucien.github.io/simplecalculator/
+
+[demo](https://erardlucien.github.io/simplecalculator/)
