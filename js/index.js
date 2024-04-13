@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if(values === null || values === undefined) {
             return;
         }
-
+        
         let res = values[0] * values[1];
         showResult(res);
     });
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if(values === null || values === undefined) {
             return;
         }
-
+ 
         let res = values[0] - values[1];
         showResult(res);
     });
@@ -59,8 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if(values[1] == 0) {
-            values[1] = 1;
+            result.textContent = `${values[1]} is not allowed as divisor!`;
+            return;
         }
+
         let res = values[0] / values[1];
         showResult(res);
     });
@@ -93,13 +95,14 @@ function retrieveValues() {
         return;
     }
 
-    if( value1 <= MIN_VALUE || value2 <= MIN_VALUE ) {
+    if( ( value1 <= MIN_VALUE || value2 <= MIN_VALUE ) && value1 != 0 && value2 != 0 ) {
         result.textContent = `value1 and value2 should be greater than ${MIN_VALUE}!`;
         return;
     }
 
     return [value1, value2];
 }
+
 
 function showResult (res) {
 
