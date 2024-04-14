@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function containsOnlyNumbers(str) {
-    return /^(\-{0,1}\d+\.{0,1}\d{0,5})$/.test(str);
+    return /^(\-{0,1}\d+\.{0,1}\d{0,5})$/.test(str) || /^(\-{0,1}\d+\.{0,1}\d{0,2}e{0,1}\-{0,1}\d{0,3})$/.test(str);
 }
 
 function retrieveValues() {
@@ -90,26 +90,36 @@ function retrieveValues() {
     let value1 = parseFloat(field1Value);
     let value2 = parseFloat(field2Value);
 
-    if( value1 >= MAX_VALUE || value2 >= MAX_VALUE ) {
-        result.textContent = `value1 and value2 should be lesser than ${MAX_VALUE}!`;
+    if( !isInsideRange(value1) || field1Value !== value1.toString() ) {
+        result.textContent = `${field1Value} is out of range`;
         return;
-    }
-
-    if( ( value1 <= MIN_VALUE || value2 <= MIN_VALUE ) && value1 != 0 && value2 != 0 ) {
-        result.textContent = `value1 and value2 should be greater than ${MIN_VALUE}!`;
+    } else if( !isInsideRange(value2) || field2Value !== value2.toString() ) {
+        result.textContent = `${field2Value} is out of range`;
         return;
     }
 
     return [value1, value2];
 }
 
+function isInsideRange(value) {
+    return value === 0 || Math.abs(value) > MIN_VALUE && Math.abs(value) < MAX_VALUE;
+}
+
+function isFloatingPoint(res) {
+    let tmp = res.toString();
+
+    return tmp.includes('.');
+}
 
 function showResult (res) {
 
-    if( ( res <= MIN_VALUE || res >= MAX_VALUE ) && res != 0 ) {
-        result.textContent = `Out of range!`;
+    if( !isInsideRange(res) ) {
+        result.textContent = `${res} is out of range!`;
         return;
+    } else if( isFloatingPoint(res) ) {
+        result.textContent = res.toPrecision(7);
+    } else {
+        result.textContent = res;
     }
 
-    result.textContent = res.toFixed(7);
 }
