@@ -15,6 +15,7 @@ const reset = document.querySelector("#reset");
 
 const MAX_VALUE = Number.MAX_VALUE;
 const MIN_VALUE = Number.MIN_VALUE;
+const DIGITS_NUMBERS_AS_INTEGER = 16;
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -75,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function containsOnlyNumbers(str) {
-    return /^(\-{0,1}\d+\.{0,1}\d{0,5})$/.test(str) || /^(\-{0,1}\d+\.{0,1}\d{0,2}e{0,1}\-{0,1}\d{0,3})$/.test(str);
+    return /^(\-{0,1}\d+\.{0,1}\d{0,5})$/.test(str) || /^(\-{0,1}\d+\.{0,1}\d{0,2}e{0,1}(\-|\+){0,1}\d{0,3})$/.test(str);
 }
 
 function retrieveValues() {
@@ -90,11 +91,39 @@ function retrieveValues() {
     let value1 = parseFloat(field1Value);
     let value2 = parseFloat(field2Value);
 
-    if( !isInsideRange(value1) || field1Value !== value1.toString() ) {
-        result.textContent = `${field1Value} is out of range`;
+    if(
+        !isInsideRange(value1) || (
+            field1Value.includes('e') 
+            && field1Value.replace('+', '') !== value1.toExponential().replace('+', '')
+        )
+    ) {
+        result.textContent = `value1 is out of range`;
         return;
-    } else if( !isInsideRange(value2) || field2Value !== value2.toString() ) {
-        result.textContent = `${field2Value} is out of range`;
+    } else if(
+        !isInsideRange(value2) || (
+            field2Value.includes('e')
+            && field2Value.replace('+', '') !== value1.toExponential().replace('+', '')
+        )
+    ) {
+        result.textContent = `value2 is out of range`;
+        return;
+    } else if(
+        !field1Value.includes('e')
+        &&
+        !field1Value.includes('.')
+        &&
+        field1Value.length > DIGITS_NUMBERS_AS_INTEGER
+    ) {
+        result.textContent = `value1 should not be more than ${DIGITS_NUMBERS_AS_INTEGER} digits as a Integer`;
+        return;
+    } else if(
+        !field2Value.includes('e')
+        &&
+        !field2Value.includes('.')
+        &&
+        field2Value.length > DIGITS_NUMBERS_AS_INTEGER
+    ) {
+        result.textContent = `value2 should not be more than ${DIGITS_NUMBERS_AS_INTEGER} digits as a Integer`;
         return;
     }
 
@@ -114,7 +143,7 @@ function isFloatingPoint(res) {
 function showResult (res) {
 
     if( !isInsideRange(res) ) {
-        result.textContent = `${res} is out of range!`;
+        result.textContent = `result is out of range!`;
         return;
     } else if( isFloatingPoint(res) ) {
         result.textContent = res.toPrecision(7);
