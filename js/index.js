@@ -106,7 +106,7 @@ function retrieveValues() {
 
 function showResult (res) {
 
-    if( res <= MIN_VALUE || res >= MAX_VALUE ) {
+    if( ( res <= MIN_VALUE || res >= MAX_VALUE ) && res != 0 ) {
         result.textContent = `Out of range!`;
         return;
     }
